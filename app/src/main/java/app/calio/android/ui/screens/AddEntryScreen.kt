@@ -12,6 +12,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +27,8 @@ import app.calio.android.viewmodel.CalorieViewModel
 @Composable
 fun AddEntryScreen(
     viewModel: CalorieViewModel,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onReadyToSave: ((saveAction: () -> Unit) -> Unit)? = null
 ) {
     var foodName by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
@@ -35,6 +37,31 @@ fun AddEntryScreen(
     var fat by remember { mutableStateOf("") }
     var servingSize by remember { mutableStateOf("") }
     var selectedMealType by remember { mutableStateOf(MealType.BREAKFAST) }
+    
+    val saveEntry = {
+        val calorieValue = calories.toIntOrNull()
+        val proteinValue = protein.toFloatOrNull() ?: 0f
+        val carbsValue = carbs.toFloatOrNull() ?: 0f
+        val fatValue = fat.toFloatOrNull() ?: 0f
+        
+        if (foodName.isNotBlank() && calorieValue != null && calorieValue > 0) {
+            viewModel.addEntry(
+                name = foodName,
+                calories = calorieValue,
+                protein = proteinValue,
+                carbs = carbsValue,
+                fat = fatValue,
+                servingSize = servingSize,
+                mealType = selectedMealType
+            )
+            onNavigateBack()
+        }
+    }
+    
+    // Expose save function to parent
+    LaunchedEffect(foodName, calories, protein, carbs, fat, servingSize, selectedMealType) {
+        onReadyToSave?.invoke(saveEntry)
+    }
     
     Scaffold(
         topBar = {
@@ -58,36 +85,6 @@ fun AddEntryScreen(
                     titleContentColor = MaterialTheme.colorScheme.onBackground
                 )
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    val calorieValue = calories.toIntOrNull()
-                    val proteinValue = protein.toFloatOrNull() ?: 0f
-                    val carbsValue = carbs.toFloatOrNull() ?: 0f
-                    val fatValue = fat.toFloatOrNull() ?: 0f
-                    
-                    if (foodName.isNotBlank() && calorieValue != null && calorieValue > 0) {
-                        viewModel.addEntry(
-                            name = foodName,
-                            calories = calorieValue,
-                            protein = proteinValue,
-                            carbs = carbsValue,
-                            fat = fatValue,
-                            servingSize = servingSize,
-                            mealType = selectedMealType
-                        )
-                        onNavigateBack()
-                    }
-                },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Add"
-                )
-            }
         }
     ) { paddingValues ->
         Column(

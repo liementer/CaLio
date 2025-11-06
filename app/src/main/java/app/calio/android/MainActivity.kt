@@ -7,6 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,6 +86,7 @@ enum class Screen {
 fun CalorieTrackerApp(viewModel: CalorieViewModel) {
     var currentScreen by remember { mutableStateOf(Screen.HOME) }
     var currentNavDestination by remember { mutableStateOf(NavDestination.HOME) }
+    var saveAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -98,6 +105,38 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                         }
                     }
                 )
+            }
+        },
+        floatingActionButton = {
+            // Show FAB only on home and add entry screens
+            when (currentScreen) {
+                Screen.HOME -> {
+                    FloatingActionButton(
+                        onClick = { currentScreen = Screen.ADD_ENTRY },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Icon(
+                            imageVector = androidx.compose.material.icons.Icons.Default.Add,
+                            contentDescription = "Add Entry"
+                        )
+                    }
+                }
+                Screen.ADD_ENTRY -> {
+                    FloatingActionButton(
+                        onClick = {
+                            saveAction?.invoke()
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Icon(
+                            imageVector = androidx.compose.material.icons.Icons.Default.Check,
+                            contentDescription = "Save"
+                        )
+                    }
+                }
+                else -> { /* No FAB for other screens */ }
             }
         }
     ) { paddingValues ->
@@ -125,6 +164,9 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                     onNavigateBack = { 
                         currentScreen = Screen.HOME
                         currentNavDestination = NavDestination.HOME
+                    },
+                    onReadyToSave = { save ->
+                        saveAction = save
                     }
                 )
             }
