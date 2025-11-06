@@ -50,13 +50,11 @@ fun HomeScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         contentPadding = PaddingValues(
-            top = 0.dp,
+            top = bottomNavPadding.calculateTopPadding() + 16.dp,
             bottom = bottomNavPadding.calculateBottomPadding() + 80.dp
         )
     ) {
             item {
-                Spacer(modifier = Modifier.height(16.dp))
-                
                 // Header
                 Row(
                     modifier = Modifier.fillMaxWidth(),
