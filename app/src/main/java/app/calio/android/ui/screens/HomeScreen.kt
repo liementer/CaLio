@@ -3,7 +3,6 @@ package app.calio.android.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -45,17 +44,16 @@ fun HomeScreen(
         )
     }
     
-    Box(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(bottomNavPadding)
+            .padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(
+            top = 0.dp,
+            bottom = bottomNavPadding.calculateBottomPadding() + 80.dp
+        )
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
-        ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 
@@ -295,10 +293,6 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                 }
-            }
-            
-            item { 
-                Spacer(modifier = Modifier.height(80.dp))
             }
         }
     }
