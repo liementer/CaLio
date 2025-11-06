@@ -2,6 +2,8 @@
 
 A professional Android calorie tracking application built with Clean Architecture and Jetpack Compose.
 
+**100% Privacy-Focused** - All your data stays on your device. No data collection, no servers, no tracking.
+
 ## Features
 
 - Daily calorie and macronutrient tracking (protein, carbs, fat)
@@ -77,7 +79,15 @@ app/src/main/java/app/calio/android/
 
 ## Privacy
 
-All data is stored locally on your device. No data is transmitted to external servers. See [PRIVACY.md](PRIVACY.md) for details.
+**Your data never leaves your device.**
+
+- All data is stored locally using Android SharedPreferences
+- No servers, no cloud sync, no data collection
+- No analytics, no tracking, no third-party services
+- Complete privacy - we can't access your data even if we wanted to
+- Uninstall the app = all data is permanently deleted
+
+See [PRIVACY.md](PRIVACY.md) for full privacy policy.
 
 ## License
 
