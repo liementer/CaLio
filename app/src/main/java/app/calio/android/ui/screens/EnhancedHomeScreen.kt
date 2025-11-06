@@ -27,7 +27,7 @@ fun EnhancedHomeScreen(
     onNavigateToAdd: () -> Unit,
     onNavigateToStats: () -> Unit,
     onNavigateToProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    bottomNavPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val todayStats by viewModel.todayStats.collectAsState()
     val settings by viewModel.settings.collectAsState()
@@ -56,10 +56,11 @@ fun EnhancedHomeScreen(
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(innerPadding)
+                .padding(bottomNavPadding)
                 .padding(horizontal = 16.dp)
         ) {
             item {
