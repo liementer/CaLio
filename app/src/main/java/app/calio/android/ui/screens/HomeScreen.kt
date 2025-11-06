@@ -296,7 +296,7 @@ fun HomeScreen(
             }
         }
     }
-}
+
 
 @Composable
 fun EnhancedFoodEntryCard(

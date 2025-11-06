@@ -82,8 +82,8 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
-                .padding(bottom = bottomNavPadding.calculateBottomPadding() + 16.dp)
                 .padding(16.dp)
+                .padding(bottom = bottomNavPadding.calculateBottomPadding())
                 .verticalScroll(rememberScrollState())
         ) {
             // User Profile Section
