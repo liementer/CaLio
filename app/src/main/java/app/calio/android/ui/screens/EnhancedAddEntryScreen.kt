@@ -35,7 +35,7 @@ fun EnhancedAddEntryScreen(
     var fat by remember { mutableStateOf("") }
     var servingSize by remember { mutableStateOf("") }
     var selectedMealType by remember { mutableStateOf(MealType.BREAKFAST) }
-    var expandedMacros by remember { mutableStateOf(false) }
+    var expandedMacros by remember { mutableStateOf(true) }
     
     Scaffold(
         topBar = {
@@ -118,53 +118,55 @@ fun EnhancedAddEntryScreen(
                         .fillMaxWidth()
                         .clickable { expandedMacros = !expandedMacros }
                         .padding(bottom = if (expandedMacros) 12.dp else 0.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     CardHeader(
-                        title = "Macronutrients (Optional)",
-                        description = "Add detailed nutrition info",
+                        title = "Macronutrients",
+                        description = if (expandedMacros) "Protein, Carbs, Fat" else "Tap to expand",
                         modifier = Modifier.weight(1f)
                     )
-                    Text(
-                        text = if (expandedMacros) "▲" else "▼",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
+                    Icon(
+                        imageVector = if (expandedMacros) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = if (expandedMacros) "Collapse" else "Expand",
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 
                 if (expandedMacros) {
                     Spacer(modifier = Modifier.height(16.dp))
                     
-                    Input(
-                        value = protein,
-                        onValueChange = { protein = it.filter { char -> char.isDigit() || char == '.' } },
-                        label = "Protein (grams)",
-                        placeholder = "30",
-                        keyboardType = KeyboardType.Decimal,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    
-                    Spacer(modifier = Modifier.height(12.dp))
-                    
-                    Input(
-                        value = carbs,
-                        onValueChange = { carbs = it.filter { char -> char.isDigit() || char == '.' } },
-                        label = "Carbs (grams)",
-                        placeholder = "15",
-                        keyboardType = KeyboardType.Decimal,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    
-                    Spacer(modifier = Modifier.height(12.dp))
-                    
-                    Input(
-                        value = fat,
-                        onValueChange = { fat = it.filter { char -> char.isDigit() || char == '.' } },
-                        label = "Fat (grams)",
-                        placeholder = "8",
-                        keyboardType = KeyboardType.Decimal,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Input(
+                            value = protein,
+                            onValueChange = { protein = it.filter { char -> char.isDigit() || char == '.' } },
+                            label = "Protein (g)",
+                            placeholder = "0",
+                            keyboardType = KeyboardType.Decimal,
+                            modifier = Modifier.weight(1f)
+                        )
+                        
+                        Input(
+                            value = carbs,
+                            onValueChange = { carbs = it.filter { char -> char.isDigit() || char == '.' } },
+                            label = "Carbs (g)",
+                            placeholder = "0",
+                            keyboardType = KeyboardType.Decimal,
+                            modifier = Modifier.weight(1f)
+                        )
+                        
+                        Input(
+                            value = fat,
+                            onValueChange = { fat = it.filter { char -> char.isDigit() || char == '.' } },
+                            label = "Fat (g)",
+                            placeholder = "0",
+                            keyboardType = KeyboardType.Decimal,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                     
                     Spacer(modifier = Modifier.height(12.dp))
                     
