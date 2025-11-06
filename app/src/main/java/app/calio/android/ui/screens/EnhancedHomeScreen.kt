@@ -26,7 +26,8 @@ fun EnhancedHomeScreen(
     viewModel: CalorieViewModel,
     onNavigateToAdd: () -> Unit,
     onNavigateToStats: () -> Unit,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val todayStats by viewModel.todayStats.collectAsState()
     val settings by viewModel.settings.collectAsState()
@@ -53,12 +54,12 @@ fun EnhancedHomeScreen(
                 Icon(Icons.Default.Add, contentDescription = "Add Entry")
             }
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(paddingValues)
+                .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
             item {
