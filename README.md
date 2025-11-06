@@ -13,6 +13,15 @@ A professional Android calorie tracking application built with Clean Architectur
 - Material Design 3 UI with neutral theme
 - Local data persistence
 
+## Screenshots
+
+<p align="center">
+  <img src="art/img.png" width="200" alt="Home Screen"/>
+  <img src="art/img_1.png" width="200" alt="Add Entry"/>
+  <img src="art/img_2.png" width="200" alt="Statistics"/>
+  <img src="art/img_3.png" width="200" alt="Profile"/>
+</p>
+
 ## Architecture
 
 ### Clean Architecture Layers
