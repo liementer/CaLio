@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -100,23 +101,24 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
             }
         }
     ) { paddingValues ->
-        when (currentScreen) {
-            Screen.HOME -> {
-                EnhancedHomeScreen(
-                    viewModel = viewModel,
-                    onNavigateToAdd = { 
-                        currentScreen = Screen.ADD_ENTRY 
-                    },
-                    onNavigateToStats = { 
-                        currentScreen = Screen.STATS
-                        currentNavDestination = NavDestination.STATS
-                    },
-                    onNavigateToProfile = { 
-                        currentScreen = Screen.PROFILE
-                        currentNavDestination = NavDestination.PROFILE
-                    }
-                )
-            }
+        Box(modifier = Modifier.padding(paddingValues)) {
+            when (currentScreen) {
+                Screen.HOME -> {
+                    EnhancedHomeScreen(
+                        viewModel = viewModel,
+                        onNavigateToAdd = { 
+                            currentScreen = Screen.ADD_ENTRY 
+                        },
+                        onNavigateToStats = { 
+                            currentScreen = Screen.STATS
+                            currentNavDestination = NavDestination.STATS
+                        },
+                        onNavigateToProfile = { 
+                            currentScreen = Screen.PROFILE
+                            currentNavDestination = NavDestination.PROFILE
+                        }
+                    )
+                }
             Screen.ADD_ENTRY -> {
                 EnhancedAddEntryScreen(
                     viewModel = viewModel,
@@ -144,14 +146,15 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                     }
                 )
             }
-            Screen.HISTORY -> {
-                HistoryScreen(
-                    viewModel = viewModel,
-                    onNavigateBack = { 
-                        currentScreen = Screen.HOME
-                        currentNavDestination = NavDestination.HOME
-                    }
-                )
+                Screen.HISTORY -> {
+                    HistoryScreen(
+                        viewModel = viewModel,
+                        onNavigateBack = { 
+                            currentScreen = Screen.HOME
+                            currentNavDestination = NavDestination.HOME
+                        }
+                    )
+                }
             }
         }
     }
