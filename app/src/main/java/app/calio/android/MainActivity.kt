@@ -103,7 +103,7 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
     ) { paddingValues ->
         when (currentScreen) {
             Screen.HOME -> {
-                EnhancedHomeScreen(
+                HomeScreen(
                     viewModel = viewModel,
                     onNavigateToAdd = { 
                         currentScreen = Screen.ADD_ENTRY 
@@ -120,7 +120,7 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                 )
             }
             Screen.ADD_ENTRY -> {
-                EnhancedAddEntryScreen(
+                AddEntryScreen(
                     viewModel = viewModel,
                     onNavigateBack = { 
                         currentScreen = Screen.HOME
@@ -129,7 +129,7 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                 )
             }
             Screen.STATS -> {
-                EnhancedStatsScreen(
+                StatsScreen(
                     viewModel = viewModel,
                     onNavigateBack = { 
                         currentScreen = Screen.HOME

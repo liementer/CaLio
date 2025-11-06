@@ -22,7 +22,7 @@ import app.calio.android.ui.components.*
 import app.calio.android.viewmodel.CalorieViewModel
 
 @Composable
-fun EnhancedHomeScreen(
+fun HomeScreen(
     viewModel: CalorieViewModel,
     onNavigateToAdd: () -> Unit,
     onNavigateToStats: () -> Unit,

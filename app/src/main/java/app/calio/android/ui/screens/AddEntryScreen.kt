@@ -24,7 +24,7 @@ import app.calio.android.viewmodel.CalorieViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnhancedAddEntryScreen(
+fun AddEntryScreen(
     viewModel: CalorieViewModel,
     onNavigateBack: () -> Unit
 ) {
@@ -201,7 +201,7 @@ fun EnhancedAddEntryScreen(
                 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     MealType.values().forEach { mealType ->
-                        EnhancedMealTypeOption(
+                        MealTypeOption(
                             mealType = mealType,
                             isSelected = selectedMealType == mealType,
                             onSelect = { selectedMealType = mealType }
@@ -216,7 +216,7 @@ fun EnhancedAddEntryScreen(
 }
 
 @Composable
-fun EnhancedMealTypeOption(
+fun MealTypeOption(
     mealType: MealType,
     isSelected: Boolean,
     onSelect: () -> Unit

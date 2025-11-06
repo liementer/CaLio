@@ -27,7 +27,7 @@ import app.calio.android.viewmodel.CalorieViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnhancedStatsScreen(
+fun StatsScreen(
     viewModel: CalorieViewModel,
     onNavigateBack: () -> Unit
 ) {
