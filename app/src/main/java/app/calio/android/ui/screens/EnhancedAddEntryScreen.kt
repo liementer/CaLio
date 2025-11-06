@@ -35,7 +35,6 @@ fun EnhancedAddEntryScreen(
     var fat by remember { mutableStateOf("") }
     var servingSize by remember { mutableStateOf("") }
     var selectedMealType by remember { mutableStateOf(MealType.BREAKFAST) }
-    var expandedMacros by remember { mutableStateOf(true) }
     
     Scaffold(
         topBar = {
@@ -69,23 +68,28 @@ fun EnhancedAddEntryScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
+            // Food Name
             Card(modifier = Modifier.fillMaxWidth()) {
-                CardHeader(
-                    title = "Food Information",
-                    description = "Enter the details of your meal"
-                )
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
                 Input(
                     value = foodName,
                     onValueChange = { foodName = it },
-                    label = "Food Name *",
-                    placeholder = "e.g., Grilled Chicken Breast",
+                    label = "Food Name",
+                    placeholder = "Grilled Chicken Breast",
                     modifier = Modifier.fillMaxWidth()
                 )
-                
-                Spacer(modifier = Modifier.height(16.dp))
+            }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Calories and Serving
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Nutrition Information",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
                 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -94,7 +98,7 @@ fun EnhancedAddEntryScreen(
                     Input(
                         value = calories,
                         onValueChange = { calories = it.filter { char -> char.isDigit() } },
-                        label = "Calories *",
+                        label = "Calories",
                         placeholder = "350",
                         keyboardType = KeyboardType.Number,
                         modifier = Modifier.weight(1f)
@@ -108,108 +112,61 @@ fun EnhancedAddEntryScreen(
                         modifier = Modifier.weight(1f)
                     )
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { expandedMacros = !expandedMacros }
-                        .padding(bottom = if (expandedMacros) 12.dp else 0.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CardHeader(
-                        title = "Macronutrients",
-                        description = if (expandedMacros) "Protein, Carbs, Fat" else "Tap to expand",
-                        modifier = Modifier.weight(1f)
-                    )
-                    Icon(
-                        imageVector = if (expandedMacros) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                        contentDescription = if (expandedMacros) "Collapse" else "Expand",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
                 
-                if (expandedMacros) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Input(
-                            value = protein,
-                            onValueChange = { protein = it.filter { char -> char.isDigit() || char == '.' } },
-                            label = "Protein (g)",
-                            placeholder = "0",
-                            keyboardType = KeyboardType.Decimal,
-                            modifier = Modifier.weight(1f)
-                        )
-                        
-                        Input(
-                            value = carbs,
-                            onValueChange = { carbs = it.filter { char -> char.isDigit() || char == '.' } },
-                            label = "Carbs (g)",
-                            placeholder = "0",
-                            keyboardType = KeyboardType.Decimal,
-                            modifier = Modifier.weight(1f)
-                        )
-                        
-                        Input(
-                            value = fat,
-                            onValueChange = { fat = it.filter { char -> char.isDigit() || char == '.' } },
-                            label = "Fat (g)",
-                            placeholder = "0",
-                            keyboardType = KeyboardType.Decimal,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(12.dp))
-                    
-                    // Macro summary
-                    val totalProtein = protein.toFloatOrNull() ?: 0f
-                    val totalCarbs = carbs.toFloatOrNull() ?: 0f
-                    val totalFat = fat.toFloatOrNull() ?: 0f
-                    val calculatedCalories = (totalProtein * 4 + totalCarbs * 4 + totalFat * 9).toInt()
-                    
-                    if (calculatedCalories > 0) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(MaterialTheme.colorScheme.secondary)
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "Calculated from macros:",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSecondary
-                            )
-                            Text(
-                                text = "$calculatedCalories kcal",
-                                style = MaterialTheme.typography.bodySmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSecondary
-                            )
-                        }
-                    }
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Card(modifier = Modifier.fillMaxWidth()) {
-                CardHeader(
-                    title = "Meal Type *",
-                    description = "When did you have this?"
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = "Macronutrients (grams)",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 12.dp)
                 )
                 
-                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Input(
+                        value = protein,
+                        onValueChange = { protein = it.filter { char -> char.isDigit() || char == '.' } },
+                        label = "Protein",
+                        placeholder = "30",
+                        keyboardType = KeyboardType.Decimal,
+                        modifier = Modifier.weight(1f)
+                    )
+                    
+                    Input(
+                        value = carbs,
+                        onValueChange = { carbs = it.filter { char -> char.isDigit() || char == '.' } },
+                        label = "Carbs",
+                        placeholder = "15",
+                        keyboardType = KeyboardType.Decimal,
+                        modifier = Modifier.weight(1f)
+                    )
+                    
+                    Input(
+                        value = fat,
+                        onValueChange = { fat = it.filter { char -> char.isDigit() || char == '.' } },
+                        label = "Fat",
+                        placeholder = "8",
+                        keyboardType = KeyboardType.Decimal,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Meal Type
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Meal Type",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
                 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     MealType.values().forEach { mealType ->
@@ -224,6 +181,7 @@ fun EnhancedAddEntryScreen(
             
             Spacer(modifier = Modifier.height(24.dp))
             
+            // Add Button
             Button(
                 onClick = {
                     val calorieValue = calories.toIntOrNull()
