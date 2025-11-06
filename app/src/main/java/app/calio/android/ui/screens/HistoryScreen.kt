@@ -24,7 +24,8 @@ import java.util.*
 @Composable
 fun HistoryScreen(
     viewModel: CalorieViewModel,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    bottomNavPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val entries by viewModel.entries.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
@@ -75,6 +76,7 @@ fun HistoryScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
+                .padding(bottom = bottomNavPadding.calculateBottomPadding())
                 .padding(16.dp)
         ) {
             // Search and Filter Section
@@ -171,7 +173,8 @@ fun HistoryScreen(
             } else {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
                     groupedEntries.forEach { (date, dayEntries) ->
                         item {

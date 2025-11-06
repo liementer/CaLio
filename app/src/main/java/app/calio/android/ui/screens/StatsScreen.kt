@@ -29,7 +29,8 @@ import app.calio.android.viewmodel.CalorieViewModel
 @Composable
 fun StatsScreen(
     viewModel: CalorieViewModel,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    bottomNavPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val weeklyStats by viewModel.weeklyStats.collectAsState()
     val todayStats by viewModel.todayStats.collectAsState()
@@ -83,7 +84,10 @@ fun StatsScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(16.dp),
+            contentPadding = PaddingValues(
+                bottom = bottomNavPadding.calculateBottomPadding() + 16.dp
+            )
         ) {
             item {
                 Text(
