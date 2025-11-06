@@ -60,12 +60,17 @@ fun EnhancedAddEntryScreen(
             )
         }
     ) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
+        ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(16.dp)
+                .padding(bottom = 80.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // Food Name
@@ -179,35 +184,37 @@ fun EnhancedAddEntryScreen(
                 }
             }
             
-            Spacer(modifier = Modifier.height(24.dp))
-            
-            // Add Button
-            Button(
-                onClick = {
-                    val calorieValue = calories.toIntOrNull()
-                    val proteinValue = protein.toFloatOrNull() ?: 0f
-                    val carbsValue = carbs.toFloatOrNull() ?: 0f
-                    val fatValue = fat.toFloatOrNull() ?: 0f
-                    
-                    if (foodName.isNotBlank() && calorieValue != null && calorieValue > 0) {
-                        viewModel.addEntry(
-                            name = foodName,
-                            calories = calorieValue,
-                            protein = proteinValue,
-                            carbs = carbsValue,
-                            fat = fatValue,
-                            servingSize = servingSize,
-                            mealType = selectedMealType
-                        )
-                        onNavigateBack()
-                    }
-                },
-                text = "Add Food Entry",
-                modifier = Modifier.fillMaxWidth(),
-                enabled = foodName.isNotBlank() && calories.toIntOrNull() != null && calories.toIntOrNull()!! > 0
-            )
-            
             Spacer(modifier = Modifier.height(16.dp))
+        }
+        
+        // Sticky Add Button at bottom
+        Button(
+            onClick = {
+                val calorieValue = calories.toIntOrNull()
+                val proteinValue = protein.toFloatOrNull() ?: 0f
+                val carbsValue = carbs.toFloatOrNull() ?: 0f
+                val fatValue = fat.toFloatOrNull() ?: 0f
+                
+                if (foodName.isNotBlank() && calorieValue != null && calorieValue > 0) {
+                    viewModel.addEntry(
+                        name = foodName,
+                        calories = calorieValue,
+                        protein = proteinValue,
+                        carbs = carbsValue,
+                        fat = fatValue,
+                        servingSize = servingSize,
+                        mealType = selectedMealType
+                    )
+                    onNavigateBack()
+                }
+            },
+            text = "Add Food Entry",
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(16.dp),
+            enabled = foodName.isNotBlank() && calories.toIntOrNull() != null && calories.toIntOrNull()!! > 0
+        )
         }
     }
 }
