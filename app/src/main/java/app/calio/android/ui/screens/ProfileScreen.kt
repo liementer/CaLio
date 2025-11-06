@@ -32,8 +32,7 @@ import app.calio.android.viewmodel.CalorieViewModel
 @Composable
 fun ProfileScreen(
     viewModel: CalorieViewModel,
-    onNavigateBack: () -> Unit,
-    bottomNavPadding: PaddingValues = PaddingValues(0.dp)
+    onNavigateBack: () -> Unit
 ) {
     val settings by viewModel.settings.collectAsState()
     
@@ -82,8 +81,9 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues)
-                .padding(16.dp)
-                .padding(bottom = bottomNavPadding.calculateBottomPadding())
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
+                .padding(bottom = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // User Profile Section

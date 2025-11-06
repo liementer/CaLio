@@ -186,8 +186,7 @@ fun CalorieTrackerApp(viewModel: CalorieViewModel) {
                     onNavigateBack = { 
                         currentScreen = Screen.HOME
                         currentNavDestination = NavDestination.HOME
-                    },
-                    bottomNavPadding = paddingValues
+                    }
                 )
             }
             Screen.HISTORY -> {
